@@ -36,7 +36,7 @@ async function displayCountries(myData){
       cardHTML += `
         <div class="country">
           <div class="photo">
-            <img src="${countryData.flags.png}" alt="">
+            <img src="${countryData.flags.png}" alt="" loading="lazy">
           </div>
           <div class="details">
             <h3>${countryData.name}</h3>
@@ -90,7 +90,7 @@ function showDetails(countryH3){
         : '';
 
     let cardDetails = `
-        <img src="${selectedCountry.flags.svg}" alt="">
+        <img src="${selectedCountry.flags.svg}" alt="" width="428" height="280" loading="lazy">
         <div class="country-disc">
             <h3>${selectedCountry.name}</h3>
             <div class="sort">
