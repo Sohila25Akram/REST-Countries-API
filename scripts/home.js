@@ -99,7 +99,6 @@ function showDetails(countryH3){
         ? selectedCountry.currencies.map(cur => cur.name).join(', ') 
         : '';
     const fragment = document.createDocumentFragment();
-
     const countryDiscDiv = document.createElement('div');
     countryDiscDiv.className = 'country-disc';
     countryDiscDiv.innerHTML = `
@@ -125,6 +124,7 @@ function showDetails(countryH3){
         </div>`;
         
     fragment.appendChild(countryDiscDiv);
+    countryDetailsCon.innerHTML= '';
     countryDetailsCon.appendChild(fragment);
     updateBorders(selectedCountry);
 }
