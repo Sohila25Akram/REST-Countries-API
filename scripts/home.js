@@ -31,9 +31,11 @@ async function fetchData() {
 
 
 async function displayCountries(myData){
-    let cardHTML = '';
+    const fragment = document.createDocumentFragment();
     myData.forEach(countryData => {
-      cardHTML += `
+        const cardHTML = document.createElement('div');
+        cardHTML.className = 'country';
+        cardHTML.innerHTML = `
         <div class="country">
           <div class="photo">
             <img src="${countryData.flags.png}" alt="" loading="lazy">
@@ -45,9 +47,10 @@ async function displayCountries(myData){
             <p>Capital: <span class="capital">${countryData.capital}</span></p>
           </div>
         </div>`;
+        fragment.appendChild(cardHTML);
     });
-    countries.innerHTML = cardHTML;
-
+    countries.innerHTML = '';
+    countries.appendChild(fragment)
 }
 
 
@@ -88,8 +91,11 @@ function showDetails(countryH3){
     const currencies = Array.isArray(selectedCountry.currencies) 
         ? selectedCountry.currencies.map(cur => cur.name).join(', ') 
         : '';
+    const fragment = document.createDocumentFragment();
 
-    let cardDetails = `
+    const countryDiscDiv = document.createElement('div');
+    countryDiscDiv.className = 'country-disc';
+    countryDiscDiv.innerHTML = `
         <img src="${selectedCountry.flags.svg}" alt="" width="428" height="280" loading="lazy">
         <div class="country-disc">
             <h3>${selectedCountry.name}</h3>
@@ -111,8 +117,9 @@ function showDetails(countryH3){
             <div class="borders-container"></div>
         </div>`;
         
-    countryDetailsCon.insertAdjacentHTML("beforeend", cardDetails);
-    updateBorders(selectedCountry)
+    fragment.appendChild(countryDiscDiv);
+    countryDetailsCon.appendChild(fragment);
+    updateBorders(selectedCountry);
 }
 
 
@@ -127,12 +134,14 @@ function updateBorders(selectedCountry){
     const bordersContainer = countryDetailsCon.querySelector(".borders-container");
     bordersContainer.innerHTML = '';
     if (selectedCountry.borders && selectedCountry.borders.length > 0) {
-        const borders = selectedCountry.borders
-            .map(border => `<span class="border dark">${border}</span>`)
-            .join('');
-        bordersContainer.insertAdjacentHTML("beforeend", borders);
-    } else {
-        bordersContainer.insertAdjacentHTML("beforeend", '');
+        const fragment = document.createDocumentFragment();
+        selectedCountry.borders.forEach(border => {
+            const span = document.createElement('span');
+            span.className = 'border dark';
+            span.textContent = border;
+            fragment.appendChild(span);
+        });
+        bordersContainer.appendChild(fragment);
     }
 }
 
