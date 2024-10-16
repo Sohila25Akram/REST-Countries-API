@@ -18,11 +18,17 @@ let myData = [];
 
 
 async function fetchData() {
+    const cachedData = localStorage.getItem('countriesData');
+    if(cachedData){
+        myData = JSON.parse(cachedData);
+        return myData;
+    }
     try {
         const response = await fetch('https://raw.githubusercontent.com/Sohila25Akram/data/main/data.json');
         if (!response.ok) throw new Error('Network error');
         myData = await response.json();
         myData.length = 250;
+        localStorage.setItem('countriesData', JSON.stringify(myData))
         return myData;
     } catch (error) {
         console.error('Fetch Error:', error);
@@ -48,6 +54,7 @@ async function displayCountries(myData){
           </div>
         </div>`;
         fragment.appendChild(cardHTML);
+       
     });
     countries.innerHTML = '';
     countries.appendChild(fragment)
